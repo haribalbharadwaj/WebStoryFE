@@ -14,7 +14,13 @@ const StoryViewer = (props) => {
   const navigate = useNavigate();
   const slideDuration = 2000;
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const slides = props.slides;
+  const slides = props.slides || [];
+
+  useEffect(() => {
+    if (window.location.search.includes("viewstory=true")) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, []);
 
 
   const [bookmarkStatus, setBookmarkStatus] = useState(
