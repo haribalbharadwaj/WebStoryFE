@@ -14,17 +14,24 @@ const StoryViewer = (props) => {
   const navigate = useNavigate();
   const slideDuration = 2000;
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const slides = props.slides;
+  const slides = props.slides || [];
 
   const [bookmarkStatus, setBookmarkStatus] = useState(
-    slides.map(() => {
-      return false;
-    })
+    slides.length ? slides.map(() => false) : []
   );
 
   const [linkCopiedStatus, setLinkCopiedStatus] = useState(
-    (slides && Array.isArray(slides)) ? slides.map(() => false) : []
+    slides.length ? slides.map(() => false) : []
   );
+
+  const [likeCount, setLikeCount] = useState(
+    slides.length ? slides.map((slide) => slide.likes.length) : []
+  );
+
+  const [likeStatus, setLikeStatus] = useState(
+    slides.length ? slides.map((slide) => slide.likes.includes(localStorage.getItem("userId"))) : []
+  );
+
 
   useEffect(() => {
     const fetchBookmarkStatus = async () => {
@@ -57,12 +64,6 @@ const StoryViewer = (props) => {
     fetchBookmarkStatus();
   }, [currentSlideIndex, bookmarkStatus, slides]);
 
-  const [likeCount, setLikeCount] = useState(
-    slides.map((slide) => slide.likes.length)
-  );
-  const [likeStatus, setLikeStatus] = useState(
-    slides.map((slide) => slide.likes.includes(localStorage.getItem("userId")))
-  );
 
   const handleNextSlide = () => {
     if (currentSlideIndex < slides.length - 1) {
