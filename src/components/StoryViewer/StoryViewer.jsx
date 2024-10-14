@@ -23,9 +23,7 @@ const StoryViewer = (props) => {
   );
 
   const [linkCopiedStatus, setLinkCopiedStatus] = useState(
-    slides.map(() => {
-      return false;
-    })
+    (slides && Array.isArray(slides)) ? slides.map(() => false) : []
   );
 
   useEffect(() => {
