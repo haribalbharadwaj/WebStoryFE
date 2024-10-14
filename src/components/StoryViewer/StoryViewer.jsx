@@ -14,7 +14,8 @@ const StoryViewer = (props) => {
   const navigate = useNavigate();
   const slideDuration = 2000;
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const slides = props.slides || [];
+  const slides = props.slides;
+
 
   const [bookmarkStatus, setBookmarkStatus] = useState(
     slides.length ? slides.map(() => false) : []
